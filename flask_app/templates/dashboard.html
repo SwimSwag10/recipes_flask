@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Dojo Results</title>
+</head>
+<body>
+
+  <div id="header" class="row dashboard-style">
+    <h1 class="">Coding Dojo Wall</h1>
+    <div class="info">
+      <h2 class="">Welcome, {{ user.first_name }}:</h2>
+      <a href="/recipe/dashboard" class="btn btn-primary">Add New Recipe</a>
+      <a href="/logout"><p class="btn btn-primary">Log Out</p></a>
+    </div>
+  </div>
+
+  <div class="container">
+    <table class="table table-hover col dashboard-style">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Under 30 Minutes?</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recipe in all_recipes %}
+                <tr>
+                    <td>{{recipe.name}}</td>
+                    {% if recipe.under30 == 1 %}
+                    <td>Yes</td>
+                    {% else %}
+                    <td>No</td>
+                    {% endif %}
+                    <td>
+                        <a href="/recipe/{{recipe.id}}" class="btn btn-warning">View Instructions</a>
+                        {% if recipe.user_id == session.user_id %} {# this is for identifying if the person signed in is the creator of the recipe #}
+                        <a href="/recipe/update/form/{{recipe.id}}" class="btn btn-warning">Edit</a>
+                        <a href="/recipe/delete/{{recipe.id}}" class="btn btn-warning">Delete</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+  </div>
+
+  <!-- <div class="row dashboard-content">
+    <div class="col">
+      <div class="row">
+        <h2 class="col">All recipes</h2>
+        <a href="/recipe/dashboard" class="btn btn-primary col"><p>Create</p></a>
+      </div>
+      <div class="row">
+        {% for recipe in all_recipes %}
+          <p>okaygebusiness</p>
+        {% endfor %}
+      </div>
+    </div>
+  </div> -->
+
+</body>
+</html>

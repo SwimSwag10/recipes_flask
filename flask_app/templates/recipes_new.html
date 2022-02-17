@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>Dojo Results</title>
+</head>
+<body>
+  <div id="header" class="row dashboard-style">
+    <h1 class="">Welcome {{ user.first_name }}</h1>
+    <div class="info">
+      <a href="/dashboard"><h2 class="">Dashboard</h2></a>
+      <a href="/logout"><p class="btn btn-primary">Log Out</p></a>
+    </div>
+  </div>
+  <div class="row dashboard-content">
+    
+      <form action="/recipe/create" method="post" class="col dashboard-style">
+        <h2>Create new Recipe</h2>
+        {% with messages = get_flashed_messages(category_filter=['recipe']) %}
+          {% if messages %}
+          <div class="alert alert-danger" role="alert">
+            <strong>Incorrect</strong>
+              {% for message in messages %}
+              <p>{{message}}</p>
+              {% endfor %}
+          </div>
+          {% endif %}
+        {% endwith %}
+        <hr class="mb-4">
+
+        <p class="row">Name:</p>
+        <input type="text" name="name">
+
+        <p class="row">Description:</p>
+        <textarea name="description" cols="50" rows="3" style="border-radius: 10px;" class="form-control"></textarea>
+        
+        <p class="row">Instruction:</p>
+        <textarea name="instructions" cols="50" rows="3" style="border-radius: 10px;" class="form-control"></textarea>
+
+        <p class="row">Date Made:</p>
+        <input type="date" name="date_made" class="form-control"> 
+
+        <label for="under30" class="row"><p>Under 30 Minutes?:</p></label>
+        <div class="dashboard-content row">
+          <div class="row">
+            <label for="0" class="text-warning">No</label>
+            <input type="radio" name="under30" value="0" class="form-control row" >
+          </div>
+          <div class="row">
+            <label for="1" class="text-warning">Yes</label>
+            <input type="radio" name="under30" value="1" class="form-control row">
+          </div>
+        </div>
+        <input type="submit" name="Submit" class="btn btn-primary">
+      </form>
+  </div>
+</body>
+</html>
